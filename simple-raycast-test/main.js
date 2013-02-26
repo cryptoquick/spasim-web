@@ -11,6 +11,8 @@ function main (canvas, rx, ry) {
 	var ctx = canvas.getContext('2d');
 
 	var canel = document.createElement('canvas');
+	canel.height = canvas.height;
+	canel.width = canvas.width;
 	var ctxo = canel.getContext('2d');
 	
 	var imgd = ctxo.createImageData(canvas.width, canvas.height);
@@ -42,18 +44,18 @@ function sphere (sx, sy, sz) {
 }
 
 function paintall(ctx, ctxo, imgd, points, rx, ry, camx, camy) {
-	var pw = imgd.width / rx | 0,
-		ph = imgd.height / ry | 0,
+	var pw = points.width / rx | 0,
+		ph = points.height / ry | 0,
 		color = [0, 0, 0, 255];
 
 	for (var y = 0, h = imgd.height; y < h; y++) {
 		for (var x = 0, w = imgd.width; x < w; x++) {
 			var index = (y + x * w) * 4;
 			color = raycast(points, x, y, pw, ph, color);
-			imgd[index    ] = color[0];
-			imgd[index + 1] = color[1];
-			imgd[index + 2] = color[2];
-			imgd[index + 3] = color[3];
+			imgd.data[index    ] = color[0];
+			imgd.data[index + 1] = color[1];
+			imgd.data[index + 2] = color[2];
+			imgd.data[index + 3] = color[3];
 		}
 	}
 
